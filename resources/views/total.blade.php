@@ -14,17 +14,20 @@
     <tr>
     <td>{{ $state->state_name }}</td>
     <td>
-        <select class="form-select" aria-label="Default select example">
+        <form action="/getResult" method="POST">
+            @csrf
+        <select class="form-select" name="lga_id" onchange="this.form.submit()">
             <option selected>Select Lga</option>
             @forelse ($pollingunit as $unit )
-            <option value="">{{ $unit->polling_unit_name ?? "No Name Assinged" }}</option>
+            <option value="{{ $unit->lga_id}}">{{ $unit->lga_name ?? "No Name Assinged" }}</option>
             @empty
 
             @endforelse
           </select>
+        </form>
     </td>
 
-    {{-- <td>{{ $result }}</td> --}}
+    <td>{{ $result ?? "0" }}</td>
     </tr>
     </tbody>
     </table>

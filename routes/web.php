@@ -18,3 +18,4 @@ Route::get('/', [MainController::class, 'index']);
 Route::get('/total', [MainController::class, 'total']);
 Route::get('/addData', [MainController::class, 'addNew']);
 Route::post('addNewData', [MainController::class, 'addNewData']);
+Route::post('getResult', [MainController::class, 'getResult']);

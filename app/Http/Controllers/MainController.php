@@ -37,13 +37,8 @@ class MainController extends Controller
         $lga = DB::table('lga')
                 ->inRandomOrder()
                 ->first();
-        $pollingunit = DB::table('polling_unit')
+        $pollingunit = DB::table('lga')
                 ->get();
-
-        // $result = DB::table('announced_pu_results')
-        //         ->where('polling_unit_uniqueid',$pollingunit->uniqueid ?? 0)
-        //         ->where('polling_unit_uniqueid',$pollingunit->uniqueid ?? 0)
-        //         ->sum('party_score');
 
 
 
@@ -72,5 +67,30 @@ class MainController extends Controller
 
         return back();
 
+    }
+
+    public function getResult(Request $request)
+    {
+        //dd($request->lga_id);
+        $data = DB::table('polling_unit')
+                    ->where('lga_id',$request->lga_id)
+                    ->first();
+
+                    $result = DB::table('announced_pu_results')
+                    ->where('polling_unit_uniqueid',$data->uniqueid ?? 0)
+                    ->sum('party_score');
+
+                    
+                $state = State::where('state_id',25)
+                ->first();
+        $lga = DB::table('lga')
+                ->inRandomOrder()
+                ->first();
+        $pollingunit = DB::table('lga')
+                ->get();
+
+
+
+        return view('total', compact('state','lga', 'pollingunit','result'));
     }
 }
